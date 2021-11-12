@@ -2,7 +2,6 @@
 #include <iterator>
 int Table::hash(int k)
 {
-	//std::size_t h = std::hash<int>{}(k);
 	return k % size;
 }
 Table::Table(const Table& tab): size(tab.size)
@@ -26,7 +25,6 @@ bool operator==(const Element& e1, const Element& e2)
 Table& Table::add(int k, int date0)
 {
 	int index = hash(k);
-	//Table tab(*this);
 	Element item(k,date0);
 	if (elem[index].getKey() == k)
 	{	
