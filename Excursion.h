@@ -3,50 +3,64 @@
 #define EXCURSION_H
 #include <iostream>
 #include "Route.h"
+#include "Date.h"
 class Excursion
 {
 protected:
 	std::string excursion_name;
-	std::string date;
+	Date date;
 	double excursion_cost;
 	int max_people;
 	int sold_places;
+	virtual std::ostream& print(std::ostream&)const;
 public:
-	Excursion() :excursion_name(""),date(""),excursion_cost(0),max_people(0),sold_places(0){};
-	Excursion(std::string, std::string, double, int, int);
-	
-
-	
+	Excursion() :excursion_name(""), date{ 0,0,0 }, excursion_cost(0), max_people(0), sold_places(0){};
+	Excursion(std::string, Date&, double, int, int);
+	//virtual Route getRoute() const = 0; //абстрактный
+	virtual Route* getManyRoute()  = 0;
+	virtual int getDays() const { return 0; };
 	int getSold() const { return sold_places; };
-    void setSold(const int num) { sold_places = num; };
-	std::string getDate() const { return date; };
-	void setDate(const std::string newdate) { date = newdate; };
-	~Excursion() = default;
+    void setSold(const int num);
+	Date& getDate()  { return date; };
+	friend std::ostream& operator << (std::ostream& out, const Excursion& exc);
+	void setDate(const Date& newdate) { date = newdate; };
+	virtual ~Excursion() {  };
 };
+
 class Onedayexcursion : public Excursion
 {
 protected:
 	Route route;
+	virtual std::ostream& print(std::ostream&) const;
 public:
-	Onedayexcursion(std::string e, std::string d, double ec, int max, int sold, Route route_) :
+	Onedayexcursion() = default;
+	Onedayexcursion(std::string e, Date& d, double ec, int max, int sold, Route route_) :
 		Excursion(e, d, ec, max, sold), route(route_) {};
 	Onedayexcursion(Route route_) : route(route_) {};
-	~Onedayexcursion() = default;
+	void setRoute(Route route_)  { route = route_; };
+	virtual int getDays() const { return 1; };
+	virtual Route* getManyRoute() { Route* _route = new Route; _route[0] = route; return _route; };
+	virtual ~Onedayexcursion() { };
 };
+
 class Manydayexcursion : public Excursion
 {
 protected:
 	Route* route;
 	int days;
+	virtual std::ostream& print(std::ostream&) const;
 public:
-	Manydayexcursion();
-	Manydayexcursion(std::string e, std::string d, double ec, int max, int sold, int days_,Route* route_) :
+	Manydayexcursion() : days(0), route(nullptr) {};
+	Manydayexcursion(std::string e, Date& d, double ec, int max, int sold, int days_,Route* route_) :
 		Excursion(e, d, ec, max, sold), days(days_) 
 	{
-		route = new Route[days]; route = route_;
+		route = new Route(route_->getNumplaces(), route_->getExcplaces());// route = route_;
 	};
+	
+	virtual int getDays() const { return days; };
+	virtual Route* getManyRoute() { return route; };
 	Manydayexcursion(int days_, Route* route_) : days(days_) { route = new Route[days]; route=route_; };
-	~Manydayexcursion() { delete[] route; };
+    virtual ~Manydayexcursion() { delete[] route; };
 };
 
 #endif // !EXCURSION_H

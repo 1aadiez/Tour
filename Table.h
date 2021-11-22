@@ -3,47 +3,50 @@
 #define TABLE_H
 #include <iostream>
 #include <list>
+#include <vector>
 #include "Excursion.h"
 class Element {
 protected:
 	int key;
-	int release;
+	Date release;
 	Excursion* exc;
-	std::list <Element> next;
+	Element* next;
 public:
 	Element()=default;
-	Element(int k, int r) : key(k), release(r) { };
+	Element(int k, Date& r, Excursion* excur) : key(k), release(r), exc(excur), next(nullptr) {};
 	int getKey() const { return key; };
-	int getRelease() const { return release; };
+	Date getRelease() const { return release; };
 	friend bool operator ==(const Element&, const Element&);
+	//friend std::ostream& operator << (std::ostream&, const Element&);
 	Excursion* getExcursion() const{ return exc; };
-	Element & getNext()  { return next.front(); };
-	friend std::ostream& operator<< (std::ostream & out, const Element & el);
-	std::list <Element>& Next() { return next; };
-	void setNext(Element el) { next.push_front(el); };
+	Element* getNext() const { return next; };
+	void setNext(Element* el) { next = el; };
 	void setKey(const int k) { key = k; };
-	void setRelease(const int release_) { release = release_; };
-	void setExcursion(Excursion*);
-	~Element() { delete[]exc; next.clear(); }//delete[] exc; next.clear(); };
+	void setRelease(const Date& release_) { release = release_; };
+	void setExcursion(Excursion* excur) { exc = excur; };
+	~Element() {
+			//delete[] exc;
+	 };
 };
 class Table
 {
 protected:
 	int size;
-	Element* elem;
+	std::vector<Element> elem;
+	//Element* elem; //стандартная stl
 public:
-	Table() : size(2) { elem = new Element[size]; };
-	Table(int _size) : size(_size) { elem = new Element[size]; };
+	Table() : size(2) { elem.resize(size); };
+	Table(int _size) : size(_size) { elem.resize(_size); }//elem = new Element[size]; };
 	Table(const Table&);
 	Table(Table&&) noexcept;
 	int hash(int k);
-	Table& add(int ,int);
-	Table& remove(int k, int version);
-	Element& find(int k, int version);
+	Table& add(int ,Date&, Excursion*);
+	Table& remove(int k, Date& version);
+	Element& find(int k, Date& version);
 	void print() const;
 	~Table() 
 	{
-		delete[] elem; 
+		//delete[] elem; 
 	};
 };
 #endif 
