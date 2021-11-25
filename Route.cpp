@@ -1,6 +1,9 @@
 #include "Route.h"
 #include <iostream>
-Excursion_place::Excursion_place(std::string comm, std::string obj, std::string start, int duration) :
-	community_name(comm), object_name(obj), start_time(start), duration_time(duration)
+
+void Route::setNumplaces(const int num)
 {
+	if (num < 0)
+		throw std::invalid_argument("Invalid number of places!");
+	num_places = num;
 }

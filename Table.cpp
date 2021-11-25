@@ -33,15 +33,6 @@ Table& Table::add(int k, Date& date0, Excursion* l)
 	{
 		elem[index].setKey(k); elem[index].setRelease(date0); elem[index].setExcursion(l);
 	}
-	/*if (elem[index].getKey() == k)
-	{	
-		item->setNext(elem[index].getNext());
-		elem[index].setNext(item);
-	}
-	else
-	{
-		elem[index] = *item;
-	}*/
 	return *this;
 }
 Element& Table::find(int k, Date& version)
@@ -51,7 +42,6 @@ Element& Table::find(int k, Date& version)
 	{
 		Element res; 
 		res = elem[index];
-		std::cout << "Found";
 		return res;
 	}
 	else
@@ -62,7 +52,6 @@ Element& Table::find(int k, Date& version)
 			if (fact->getKey() == k && fact->getRelease() == version)
 			{
 				Element res(k, version,fact->getExcursion());
-				std::cout << "Found: ";
 				return res;
 			}
 			fact = fact->getNext();
@@ -109,44 +98,41 @@ Table& Table::remove(int k, Date& date0)
 			}
 			fact = fact->getNext();
 		}
-		/*for (auto it = std::begin(elem[index].Next()); it != std::end(elem[index].Next()); ++it)
-		{
-			if ((*it).getKey() == k && (*it).getRelease() == date0)
-			{
-				elem[index].Next().erase(it);
-				flag = 1;
-				break;
-			}
-		}
-		if (!flag)
-			throw std::exception("No such element");*/
 	}
 	return *this;
 }
 void Table::print() const
 {
-	for (int i = 0; i < 2; i++)
+	for (int i = 0; i < size; i++)
 	{
-		std::cout << "[" << i << "] " << elem[i].getKey() << " " << elem[i].getRelease();
-       	//std::cout << elem[i].getExcursion()->getDate();
-		Excursion* exc = elem[i].getExcursion();
-		std::cout << *(elem[i].getExcursion());//elem[i].getExcursion();
-	    std::cout << "=>\n";
-
+		if (elem[i].getExcursion())
+		{
+			std::cout << "[" << i << "] " << elem[i].getKey() << " " << elem[i].getRelease();
+			Excursion* exc = elem[i].getExcursion();
+			std::cout << *(elem[i].getExcursion());//elem[i].getExcursion();
+			std::cout << "=>\n";
 			Element* fact;
 			fact = elem[i].getNext();
 			while (fact)
 			{
-				std::cout << fact->getKey() << " "<< fact->getRelease() << " " << fact->getExcursion()[0]<<"=>";
+				std::cout << fact->getKey() << " " << fact->getRelease() << " ";
+				for (int j = 0; j < fact->getExcursion()->getDays(); j++)
+				{
+					std::cout << fact->getExcursion()[i];
+				}
+				std::cout << "=>/n";
 				fact = fact->getNext();
 			}
 			delete fact;
 			std::cout << std::endl;
-		
+		}
 	}
 }
-/*std::ostream& operator <<(std::ostream& out, const Element& el)
+Element::ConstIterator Element::begin()
 {
-	out << "=> "; out << el.getKey(); out << " "; out << el.getRelease(); out << " ";
-	return out;
-}*/
+	return Element::ConstIterator(next);
+}
+Element::ConstIterator Element::end()
+{
+	return Element::ConstIterator(next);
+}

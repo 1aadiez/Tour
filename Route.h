@@ -13,7 +13,7 @@ public:
 	Route(int num_, Excursion_place* excpl_) : num_places(num_) { excpl = new Excursion_place[num_]; excpl = excpl_; };
 	int getNumplaces() const { return num_places; };
 	Excursion_place* getExcplaces() const{ return excpl; };
-	void setNumplaces(const int num) { num_places = num; };
+	void setNumplaces(const int); //{ num_places = num; };
 	void setExcpl(Excursion_place* exc) { excpl = new Excursion_place[num_places]; excpl = exc; };
 	~Route() = default;
 };

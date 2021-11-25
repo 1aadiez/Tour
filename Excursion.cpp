@@ -22,20 +22,5 @@ std::ostream& operator<<(std::ostream& out, const Excursion& excursion)
 {
 	return excursion.print(out);
 }
-std::ostream& Onedayexcursion::print(std::ostream& out) const
-{
-	Excursion::print(out);
-	out << " Number of places: " << route.getNumplaces();
-	
-	for (int i = 0; i < route.getNumplaces(); i++)
-	{
-		out << "Place " << i << " " << route.getExcplaces()[i].getComm() << " " << route.getExcplaces()[i].getObj()
-			<< " start time:" << route.getExcplaces()[i].getStart() << route.getExcplaces()[i].getDuration();
-	}
-	return out;
-}
-std::ostream& Manydayexcursion::print(std::ostream& out) const
-{
-	Excursion::print(out);
-	return out << " Days: " << days << " Route: places" << route->getNumplaces();
-}
+
+
