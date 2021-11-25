@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "Route.h"
+#include "RouteTest.h"
 #include "../TourLibrary/Route.h"
 #include "../TourLibrary/Excursion_place.h"
 TEST(ROUTE, DefaultConstr)
@@ -16,10 +16,17 @@ TEST(ROUTE, Constructor)
 	EXPECT_TRUE("Kremlin" == excpl->getObj());
 	EXPECT_TRUE("12:05" == excpl->getStart());
 	EXPECT_EQ(4, excpl->getDuration());
+	delete excpl;
 }
 TEST(ROUTE, Setters)
 {
 	Route route;
 	route.setNumplaces(2);
 	EXPECT_EQ(2, route.getNumplaces());
+}
+TEST(ROUTE, Exceptions)
+{
+	Route route;
+	EXPECT_ANY_THROW(route.setNumplaces(-1));
+	EXPECT_ANY_THROW(route.setNumplaces(-10));
 }

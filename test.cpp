@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "../TourLibrary/Excursion_place.h"
-#include "Route.h"
+#include "RouteTest.h"
+#include "ExcursionTest.h"
 TEST(EXC_PLACES, DefaultConstructor)
 {
 	Excursion_place exc;
