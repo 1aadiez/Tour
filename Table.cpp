@@ -2,12 +2,10 @@
 #include <iterator>
 int Table::hash(int k)
 {
-	//std::size_t h = std::hash<int>{}(k);
 	return k % size;
 }
 Table::Table(const Table& tab): size(tab.size)
 {
-	//elem = new Element[size];
 	for (int i = 0; i < size; ++i)
 		elem[i] = tab.elem[i];
 }
@@ -18,6 +16,23 @@ Table::Table(Table&& tab) noexcept: size(tab.size), elem(tab.elem)
 bool operator==(const Element& e1, const Element& e2)
 {
 	return(e1.key == e2.key && e1.release == e2.release);
+}
+Element::Element(const Element& el) : key(el.key), release(el.release)
+{
+	exc = el.exc;
+	next = el.next;
+}
+Element& Element::operator=(const Element& el)
+{
+	if (&el == this)
+		return *this;
+	key = el.key;
+	for (int i = 0; el.exc->getDays(); i++)
+	{
+		exc[i] = el.exc[i];
+	}
+	next = el.next;
+	return *this;
 }
 Table& Table::add(int k, Date& date0, Excursion* l)
 {
@@ -40,8 +55,8 @@ Element& Table::find(int k, Date& version)
 	int index = hash(k);
 	if (elem[index].getKey() == k && elem[index].getRelease() == version)
 	{
-		Element res; 
-		res = elem[index];
+		Element res(elem[index]); 
+		//res = elem[index];
 		return res;
 	}
 	else
@@ -67,7 +82,7 @@ Table& Table::remove(int k, Date& date0)
 	{
 		if (elem[index].getNext())
 		{
-			elem[index] = *elem[index].getNext();
+			elem[index] =*elem[index].getNext();
 		}
 		else
 		{
@@ -127,12 +142,4 @@ void Table::print() const
 			std::cout << std::endl;
 		}
 	}
-}
-Element::ConstIterator Element::begin()
-{
-	return Element::ConstIterator(next);
-}
-Element::ConstIterator Element::end()
-{
-	return Element::ConstIterator(next);
 }

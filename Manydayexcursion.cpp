@@ -2,10 +2,11 @@
 Manydayexcursion::Manydayexcursion(std::string e, Date& d, double ec, int max, int sold, int days_, Route* route_):
 	Excursion(e, d, ec, max, sold), days(days_)
 {
-	route = new Route[days];
+	route = new Route[days_];
 	for (int i = 0; i < days; i++)
 	{
-		route[i] = route_[i];
+		route[i].setNumplaces(route_[i].getNumplaces());
+		route[i].setExcpl(route_[i].getExcplaces());
 	}
 };
 std::ostream& Manydayexcursion::print(std::ostream& out) const

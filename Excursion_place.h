@@ -17,7 +17,7 @@ public:
 	std::string getObj() const { return object_name; };
 	std::string getStart() const { return start_time; };
 	int getDuration() const { return duration_time; };
-	~Excursion_place() {};
+	~Excursion_place()=default;
 };
 
 #endif

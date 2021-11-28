@@ -12,7 +12,17 @@ public:
 	virtual int getDays() const { return days; };
 	virtual Route* getManyRoute() { return route; };
 	friend std::ostream& operator << (std::ostream&, const Manydayexcursion&);
-	Manydayexcursion(int days_, Route* route_) : days(days_) { route = new Route[days]; route = route_; };
+	Manydayexcursion(int days_, Route* route_) : days(days_) 
+	{ 
+	   route = new Route[days]; 
+	   for (int i = 0; i < days; i++)
+	   {
+		//route[i] = route_[i];
+		route[i].setNumplaces(route_[i].getNumplaces());
+		route[i].setExcpl(route_[i].getExcplaces());
+	   }
+
+	};
 	virtual ~Manydayexcursion() { delete[] route; };
 };
 
