@@ -6,10 +6,11 @@ protected:
 	Route route;
 	virtual std::ostream& print(std::ostream&) const;
 public:
-	Onedayexcursion() : Excursion() {};
+	Onedayexcursion() : Excursion() { };
 	Onedayexcursion(std::string e, Date& d, double ec, int max, int sold, Route& route_) :
 		Excursion(e, d, ec, max, sold) {
-		route = route_;
+		route.setNumplaces(route_.getNumplaces());
+		route.setExcpl(route_.getExcplaces());
 	};
 	Onedayexcursion(Route route_) : route(route_) {};
 	void setRoute(Route route_) { route = route_; };

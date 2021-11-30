@@ -22,6 +22,11 @@ Element::Element(const Element& el) : key(el.key), release(el.release)
 	exc = el.exc;
 	next = el.next;
 }
+Element::Element(Element&& el) noexcept: key(el.key), release(el.release),exc(el.exc),next(el.next)
+{
+	el.exc = nullptr;
+	el.next = nullptr;
+}
 Element& Element::operator=(const Element& el)
 {
 	if (&el == this)
@@ -48,6 +53,7 @@ Table& Table::add(int k, Date& date0, Excursion* l)
 	{
 		elem[index].setKey(k); elem[index].setRelease(date0); elem[index].setExcursion(l);
 	}
+	delete item;
 	return *this;
 }
 Element& Table::find(int k, Date& version)
@@ -123,7 +129,6 @@ void Table::print() const
 		if (elem[i].getExcursion())
 		{
 			std::cout << "[" << i << "] " << elem[i].getKey() << " " << elem[i].getRelease();
-			Excursion* exc = elem[i].getExcursion();
 			std::cout << *(elem[i].getExcursion());//elem[i].getExcursion();
 			std::cout << "=>\n";
 			Element* fact;

@@ -18,9 +18,9 @@ std::ostream& Manydayexcursion::print(std::ostream& out) const
 		out << " day[" << i << "] ";
 		for (int j = 0; j < route[i].getNumplaces(); j++)
 		{
-			out << "place[" << i << "] " << route[i].getExcplaces()[i].getComm() << " " 
-				<< route[i].getExcplaces()[i].getObj() << " start time:" 
-				<< route[i].getExcplaces()[i].getStart() << route[i].getExcplaces()[i].getDuration();
+			out << "place[" << i << "] " << route[j].getExcplaces()[j].getComm() << " " 
+				<< route[j].getExcplaces()[j].getObj() << " start time:" 
+				<< route[j].getExcplaces()[j].getStart() << route[j].getExcplaces()[j].getDuration();
 		}
 	}
 

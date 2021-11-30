@@ -17,7 +17,7 @@ public:
 	Element()=default;
 	Element(int k, Date& r, Excursion* excur) : key(k), release(r), exc(excur), next(nullptr) {};
 	Element(const Element&);
-	Element(Element&&);
+	Element(Element&&) noexcept;
 	Element& operator=(const Element&);
 	int getKey() const { return key; };
 	Date getRelease() const { return release; };
@@ -28,9 +28,7 @@ public:
 	void setKey(const int k) { key = k; };
 	void setRelease(const Date& release_) { release = release_; };
 	void setExcursion(Excursion* excur) { exc = excur; };
-	~Element() {
-			delete[] exc;
-	 };
+	~Element() {};
 };
 class Table
 {
