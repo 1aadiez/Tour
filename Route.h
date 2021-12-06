@@ -1,4 +1,8 @@
 #pragma once
+/*!
+* \file
+* \brief Заголовочный файл с описанием класса Route
+*/
 #ifndef ROUTE_H
 #define ROUTE_H
 #include <iostream>
@@ -11,12 +15,12 @@ protected:
 public:
 	Route() : num_places(1) { excpl = new Excursion_place[num_places]; };
 	Route(int, Excursion_place*);
+	/// \return Количество пунктов экскурсии
 	int getNumplaces() const { return num_places; };
+	/// \return Массив пунктов экскурсии
 	Excursion_place* getExcplaces() const{ return excpl; };
-	void setNumplaces(int); //{ num_places = num; };
-	void setExcpl(Excursion_place* exc) {  
-		
-		for(int i=0;i<num_places;i++)excpl[i] = exc[i]; };
+	void setNumplaces(int); 
+	void setExcpl(Excursion_place*);
 	~Route(){ delete[]excpl; };
 };
 #endif // !
